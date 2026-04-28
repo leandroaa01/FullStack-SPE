@@ -1,0 +1,42 @@
+.app-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #3373C8;
+  height: 90px;
+  width: 100%;
+  text-align: center;
+  color: #F3F8FF;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  margin: 0;
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .app-footer {
+    height: 85px;
+    font-size: 14px;
+  }
+}
+
+/* Celular grande */
+@media (max-width: 768px) {
+  .app-footer {
+    height: 80px;
+    font-size: 13px;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* Celular */
+@media (max-width: 480px) {
+  .app-footer {
+    height: 75px;
+    font-size: 11px;
+    padding: 0.5rem 0.5rem;
+    line-height: 1.4;
+  }
+}

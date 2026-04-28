@@ -1,0 +1,43 @@
+<header
+  class="app-header"
+  [class.home-context]="isRoute('/home', true)"
+  [class.meus-dados-context]="isRoute('/meus-dados', true)"
+  [class.admin-context]="isRoute('/admin', true)"
+>
+  <div class="logo">
+    <img src="../../../assets/logo.png" alt="logo">
+    <p class="dimap">
+      <span class="full">DIMAp | SPE - Sistema de Ponto Eletrônico</span>
+      <span class="short" title="DIMAp | SPE - Sistema de Ponto Eletrônico">DIMAp | SPE</span>
+    </p>
+  </div>
+  <ul class="routes-icons">
+    <li *ngIf="!isAdmin">
+      <a
+        routerLink="/home"
+        class="nav-link"
+        title="Home"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <img src="../../../assets/icon-home.svg" alt="Home">
+      </a>
+    </li>
+    <li>
+      <a
+        [routerLink]="profileRoute"
+        class="nav-link"
+        title="Meus dados"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: false }"
+      >
+        <img src="../../../assets/icon-perfie.svg" alt="Perfil">
+      </a>
+    </li>
+    <li *ngIf="!isRoute('/login', true)">
+      <a href="/home" class="nav-link" title="Logout" (click)="logout($event)">
+        <img src="../../../assets/icon-loguot.svg" alt="Logout">
+      </a>
+    </li>
+  </ul>
+</header>

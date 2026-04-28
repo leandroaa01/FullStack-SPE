@@ -1,0 +1,75 @@
+<app-header></app-header>
+<section class="container">
+  <div *ngIf="alertaMsg" class="alert alerta-msg"
+    [ngClass]="{'alert-success': alertaTipo === 'success', 'alert-danger': alertaTipo === 'error'}">
+    {{ alertaMsg }}
+  </div>
+  <div class="tempo">
+    <h1 class="horas">{{ agora | date:'HH:mm' }}</h1>
+    <p class="data">{{ dataFormatada }}</p>
+  </div>
+
+  <div class="botoes">
+    <button class="button-one" (click)="registrarPonto()">{{ textoBotaoPonto }}</button>
+    <button
+      class="button-two"
+      [attr.data-bs-toggle]="isAuthenticated ? 'modal' : null"
+      [attr.data-bs-target]="isAuthenticated ? '#staticBackdrop' : null"
+      (click)="onJustificarClick($event)"
+    >
+      Justificar horas
+    </button>
+  </div>
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="enviarJustificativa()" autocomplete="off">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <b>Tipo de justificativa:*</b>
+            <select [(ngModel)]="justificativaMotivo" name="motivo" required #motivo="ngModel">
+              <option value="">Selecione</option>
+              <option value="Erro técnico">Erro técnico</option>
+              <option value="Faltar de Onibus">Faltar de Onibus</option>
+              <option value="Consulta Médica">Consulta Médica</option>
+              <option value="Outros">Outros</option>
+            </select>
+            <div *ngIf="motivo.invalid && motivo.touched" class="text-danger">Selecione um motivo.</div>
+            <div class="time">
+              <div class="data"><b>Data:*</b>
+                <input type="date" [(ngModel)]="justificativaData" name="data" required #data="ngModel">
+                <div *ngIf="data.invalid && data.touched" class="text-danger">Informe a data.</div>
+              </div>
+              <div class="hora"><b>Horas:*</b>
+                <input type="number" min="0" max="23" [(ngModel)]="justificativaHoras" name="horas" required
+                  #horas="ngModel">
+              </div>
+              <div class="minuto"><b>Minutos:*</b>
+                <input type="number" min="0" max="59" [(ngModel)]="justificativaMinutos" name="minutos" required
+                  #minutos="ngModel">
+              </div>
+              <div *ngIf="((horas.invalid && horas.touched) || (minutos.invalid && minutos.touched))"
+                class="text-danger">Informe horas e minutos válidos.</div>
+            </div>
+            <div class="obs">
+              <div class="jutificativa"><b>Observações:</b>
+                <textarea name="observacoes" id="observacoes" [(ngModel)]="justificativaObs" required
+                  #justificativa="ngModel" placeholder="Sistema de ponto fora do ar."></textarea>
+                <div *ngIf="justificativa.invalid && justificativa.touched" class="text-danger">Informe a justificativa.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="button-one-popup" type="submit"
+              [disabled]="!justificativaFormValida || justificativaEnviando" data-bs-dismiss="modal">Enviar</button>
+            <button class="button-one-popup-lithg" type="button" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

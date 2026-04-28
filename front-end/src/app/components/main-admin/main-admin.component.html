@@ -1,0 +1,395 @@
+<app-header></app-header>
+<main>
+  <section class="meus-dados" *ngIf="tecnicoInfo">
+    <h1 class="nome">{{ tecnicoInfo.name}}</h1>
+    <p class="matricula">{{ tecnicoInfo.cargo || 'Cargo não informado' | uppercase }}</p>
+  </section>
+
+  <section class="bolsistas">
+    <div class="filter-bolsista">
+      <form [formGroup]="filterForm" (ngSubmit)="$event.preventDefault()">
+        <label>Filtrar:</label>
+
+        <select aria-label="Filtrar por">
+          <!-- <option value="id">ID</option> -->
+          <option value="nome" selected>Nome</option>
+          <!-- <option value="matricula">Matrícula</option>
+          <option value="situacao">Situação</option> -->
+        </select>
+
+        <div class="search-box">
+          <img src="./../../assets/icon-lupa.svg" alt="Buscar">
+          <input type="search" placeholder="Procurar" formControlName="nome">
+        </div>
+
+        <button type="submit">Buscar</button>
+      </form>
+    </div>
+  </section>
+  <section class="tabela-horas">
+    <div class="table-card">
+      <div class="table-title">Bolsistas Cadastrados</div>
+      <div class="table-body">
+        <table>
+          <thead>
+            <tr>
+             <!-- // <th>ID</th> -->
+              <th>Nome</th>
+              <th>Username</th>
+              <th>Matrícula</th>
+              <th>Email</th>
+              <th>Situação</th>
+              <th>Data de Criação</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="bolsistasLoading">
+              <td colspan="8">Carregando bolsistas...</td>
+            </tr>
+            <tr *ngIf="!bolsistasLoading && bolsistasError">
+              <td colspan="8">{{ bolsistasError }}</td>
+            </tr>
+            <tr *ngIf="!bolsistasLoading && !bolsistasError && bolsistasFiltrados.length === 0">
+              <td colspan="8">Nenhum bolsista encontrado.</td>
+            </tr>
+            <tr *ngFor="let bolsista of bolsistasFiltrados">
+              <!-- //<td>{{ bolsista.id }}</td> -->
+              <td>
+                <a [routerLink]="['/admin/bolsista', bolsista.id]" class="link-router">
+                  <img src="../../../assets/open-link.svg" alt="Abrir">{{ bolsista.nome }}
+                </a>
+              </td>
+              <td>{{ bolsista.username }}</td>
+              <td>{{ bolsista.matricula }}</td>
+              <td>{{ bolsista.email }}</td>
+              <td>
+                <span class="badge" [ngClass]="isBolsistaAtivo(bolsista.situacao) ? 'badge-success' : 'badge-denied'">
+                  {{ formatSituacao(bolsista.situacao) }}
+                </span>
+              </td>
+              <td>{{ bolsista.dataCriacao ? (bolsista.dataCriacao | date:'dd/MM/yyyy') : '-' }}</td>
+              <td>
+                <a href="#" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop4" (click)="$event.preventDefault(); openEditModal(bolsista)">
+                  <img src="../../../assets/open-link.svg" alt="Editar">Editar
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="tabela-horas">
+    <div class="table-card">
+      <div class="table-title">Ultimo Pontos Dos Bolsistas</div>
+      <div class="table-body">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Data</th>
+              <th>Entrada</th>
+              <th>Saída</th>
+              <th>Situação</th>
+              <th>
+                <Table>Total de Horas</Table>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="pontosBolsistasLoading">
+              <td colspan="6">Carregando pontos...</td>
+            </tr>
+            <tr *ngIf="!pontosBolsistasLoading && pontosBolsistasError">
+              <td colspan="6">{{ pontosBolsistasError }}</td>
+            </tr>
+            <tr *ngIf="!pontosBolsistasLoading && !pontosBolsistasError && pontosBolsistasFiltrados.length === 0">
+              <td colspan="6">Nenhum ponto encontrado.</td>
+            </tr>
+            <tr *ngFor="let ponto of pontosBolsistasFiltrados">
+              <td>
+                {{ ponto.nome}}
+              </td>
+              <td>{{ ponto.horaDeEntrada | date:'dd/MM/yyyy' }}</td>
+              <td>{{ ponto.horaDeEntrada | date:'HH:mm' }}</td>
+              <td>{{ ponto.horaDeSaida ? (ponto.horaDeSaida | date:'HH:mm') : '-' }}</td>
+              <td>
+                <span class="badge" [ngClass]="getPontoStatusBadgeClass(ponto.status)">
+                  {{ formatSituacao(ponto.status) }}
+                </span>
+              </td>
+              <td>{{ formatDuracaoHoras(ponto.qtdDeHorasFeitas) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="tabela-justificadas">
+    <div class="table-card">
+      <div class="table-title">Horas Justificadas</div>
+      <div class="table-body">
+        <table>
+          <thead>
+            <tr>
+              <th>Bolsista</th>
+              <th>Tipo de justificativa</th>
+              <th>Data da justificativa</th>
+              <th>Duração</th>
+              <th>Status</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="justificativasLoading">
+              <td colspan="6">Carregando justificativas...</td>
+            </tr>
+            <tr *ngIf="!justificativasLoading && justificativasError">
+              <td colspan="6">{{ justificativasError }}</td>
+            </tr>
+            <tr *ngIf="!justificativasLoading && !justificativasError && justificativasFiltradas.length === 0">
+              <td colspan="6">Nenhuma justificativa encontrada.</td>
+            </tr>
+            <tr *ngFor="let justificativa of justificativasFiltradas">
+              <td>{{ justificativa.nomeBolsista }}</td>
+              <td>{{ justificativa.motivo }}</td>
+              <td>{{ justificativa.data | date:'dd/MM/yyyy' }}</td>
+              <td>{{ formatDuracaoHoras(justificativa.qtdDeHoras) }}</td>
+              <td>
+                <span class="badge" [ngClass]="getJustificativaStatusBadgeClass(justificativa.justificaSituacao)">
+                  {{ formatSituacao(justificativa.justificaSituacao) }}
+                </span>
+              </td>
+              <td>
+                <a href="#" class="action-link" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                  (click)="$event.preventDefault(); openJustificativaModal(justificativa)">
+                  <img src="../../../assets/open-link.svg" alt="Abrir">Abrir
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="buttons">
+    <button class="button-one-popup-lithg" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Cadastrar Usuário</button>
+    <button class="button-one-popup" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">Recuperar Senha </button>
+    <button class="button-one-popup-lithg" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop5">Imprimir Ponto</button>
+
+  </section>
+
+</main>
+
+
+<!--Modal do sistema-->
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="updateJustificativaForm" (ngSubmit)="onUpdateJustificativaSubmit()">
+        <div class="modal-body">
+          <b>Tipo de justificativa:*</b>
+          <input type="text" [value]="selectedJustificativa?.motivo || '-'" disabled>
+          <div class="time">
+            <div class="data"><b>Data:*</b>
+              <input type="text" [value]="selectedJustificativa?.data ? (selectedJustificativa?.data | date:'yyyy-MM-dd') : '-'" disabled>
+            </div>
+            <div class="hora"><b>Horas:*</b>
+              <input type="text" [value]="selectedJustificativa ? getDuracaoHorasInteiras(selectedJustificativa.qtdDeHoras) : '-'" disabled>
+            </div>
+            <div class="minuto"><b>Minutos:*</b>
+              <input type="text" [value]="selectedJustificativa ? getDuracaoMinutos(selectedJustificativa.qtdDeHoras) : '-'" disabled>
+            </div>
+          </div>
+          <div class="obs">
+            <div class="jutificativa"><b>Justificativa</b>
+              <textarea placeholder="Sistema de ponto fora do ar."
+                [value]="selectedJustificativa?.justificativa || ''" disabled></textarea>
+            </div>
+            <div class="separador"></div>
+            <b>Status:</b>
+            <select class="status" formControlName="status">
+              <option value="DEFERIDO">Deferido</option>
+              <option value="EMANALISE">Em análise</option>
+              <option value="INDEFERIDO">Indeferido</option>
+            </select>
+            <div class="obs">
+              <div class="jutificativa"><b>Observações:</b>
+                <textarea formControlName="observacoes" placeholder="Digite as observações"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="updateJustificativaSuccess" class="msg-success">Justificativa atualizada com sucesso!</div>
+          <div *ngIf="updateJustificativaError" class="msg-error">{{ updateJustificativaError }}</div>
+        </div>
+        <div class="modal-footer">
+          <button class="button-one-popup" type="submit" [disabled]="updateJustificativaForm.invalid || updateJustificativaLoading">Enviar</button>
+          <button class="button-one-popup-lithg" data-bs-dismiss="modal" type="button">Fechar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" class="cadastro">
+        <b>Nome:*</b>
+        <input type="text" placeholder="Digite seu nome" formControlName="name">
+        <b>Matrícula:*</b>
+        <input type="text" placeholder="Digite sua matrícula" formControlName="matricula">
+        <b>Email:*</b>
+        <input type="email" placeholder="Digite seu email" formControlName="email">
+        <b>Username:</b>
+        <input type="text" placeholder="Digite seu username" formControlName="username">
+        <b>Senha:*</b>
+        <input type="password" placeholder="Digite sua senha" formControlName="password">
+        <b>Tipo de Conta:</b>
+        <select class="status" formControlName="roles">
+          <option value="ADMIN">Admin</option>
+          <option value="BOLSISTA">Bolsista</option>
+        </select>
+        <b>Cargo:</b>
+        <input type="text" placeholder="Digite o cargo" formControlName="cargo">
+
+  <div *ngIf="registerSuccess" class="msg-success">Cadastro realizado com sucesso!</div>
+  <div *ngIf="registerError" class="msg-error">{{ registerError }}</div>
+
+        <div class="modal-footer">
+          <button class="button-one-popup" type="button" (click)="onRegisterSubmit()"
+            [disabled]="registerForm.invalid">Enviar</button>
+          <button class="button-one-popup-lithg" data-bs-dismiss="modal" type="button">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="cadastro" [formGroup]="changePasswordForm" (ngSubmit)="onChangePassword()">
+        <b>Matrícula:*</b>
+        <input type="text" placeholder="Digite sua matrícula" formControlName="matricula">
+        <b>Senha:*</b>
+        <input type="password" placeholder="Digite sua senha" formControlName="senhaNova">
+        <b>Confirma Senha:*</b>
+        <input type="password" placeholder="Confirme sua senha" formControlName="senhaConfirmacao">
+
+  <div *ngIf="changePasswordError" class="msg-error">{{ changePasswordError }}</div>
+  <div *ngIf="changePasswordSuccess" class="msg-success">Senha atualizada com sucesso!</div>
+
+        <div class="modal-footer">
+          <button class="button-one-popup" type="submit" [disabled]="changePasswordForm.invalid">Atualizar</button>
+          <button class="button-one-popup-lithg" data-bs-dismiss="modal" type="button">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="staticBackdrop4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="cadastro" [formGroup]="editBolsistaForm" (ngSubmit)="onEditBolsistaSubmit()">
+        <b>Nome:*</b>
+        <input type="text" placeholder="Digite seu nome" formControlName="name">
+        <b>Matrícula:*</b>
+        <input type="text" placeholder="Digite sua matrícula" formControlName="matricula">
+        <b>Email:*</b>
+        <input type="email" placeholder="Digite seu email" formControlName="email">
+        <b>Username:*</b>
+        <input type="text" placeholder="Digite seu username" formControlName="username">
+        <b>Tipo de Conta:*</b>
+        <select class="status" formControlName="role">
+          <option value="BOLSISTA">Bolsista</option>
+          <option value="ADMIN">Admin</option>
+        </select>
+        <b>Cargo:*</b>
+        <input type="text" placeholder="Digite o cargo" formControlName="cargo">
+        <b>Situação da Conta:*</b>
+        <select class="status" formControlName="situacao">
+          <option value="ATIVO">Ativo</option>
+          <option value="DESATIVADO">Desativado</option>
+        </select>
+
+  <div *ngIf="editBolsistaSuccess" class="msg-success">Dados atualizados com sucesso!</div>
+  <div *ngIf="editBolsistaError" class="msg-error">{{ editBolsistaError }}</div>
+
+        <div class="modal-footer">
+          <button class="button-one-popup" type="submit" [disabled]="editBolsistaForm.invalid">Enviar</button>
+          <button class="button-one-popup-lithg" data-bs-dismiss="modal" type="button">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+ <div class="modal fade" id="staticBackdrop5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="imprimir-bolsista" [formGroup]="imprimirPontoForm">
+          <label>Username:</label>
+          <input type="text" placeholder="Digite o username do bolsista" formControlName="username">
+
+          <label>Data de início:</label>
+          <input
+            type="text"
+            inputmode="numeric"
+            placeholder="dd/mm/aaaa"
+            maxlength="10"
+            formControlName="dataInicio"
+          >
+
+          <label>Data de término:</label>
+          <input
+            type="text"
+            inputmode="numeric"
+            placeholder="dd/mm/aaaa"
+            maxlength="10"
+            formControlName="dataFim"
+          >
+
+          <div *ngIf="imprimirPontoError" class="msg-error">{{ imprimirPontoError }}</div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="button-one-popup" type="button" (click)="imprimirPontoBolsista()" [disabled]="imprimirPontoLoading || imprimirPontoForm.invalid">
+            {{ imprimirPontoLoading ? 'Imprimindo...' : 'Imprimir' }}
+          </button>
+          <button class="button-one-popup-lithg" type="button" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>

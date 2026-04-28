@@ -1,0 +1,1161 @@
+/* Modal de datas (Imprimir Ponto) estilizado */
+#staticBackdrop3 .modal-content {
+  border-radius: 18px;
+  border: 2px solid #3373C8;
+  background: #f6fbff;
+  box-shadow: 0 8px 24px rgba(51, 115, 200, 0.10);
+}
+
+#staticBackdrop3 .modal-header {
+  border-bottom: none;
+  background: transparent;
+  padding: 18px 24px 0 24px;
+}
+
+#staticBackdrop3 .modal-body,
+#staticBackdrop3 .modal-content>div:not(.modal-header):not(.modal-footer) {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px 24px 0 24px;
+}
+
+#staticBackdrop3 label {
+  color: #3373C8;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  margin-top: 10px;
+}
+
+#staticBackdrop3 input[type="date"] {
+  width: 100%;
+  background: #d3e4fa;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 18px;
+  color: #3373C8;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+#staticBackdrop3 .modal-footer {
+  border-top: none;
+  padding: 18px 24px 24px 24px;
+  display: flex;
+  gap: 18px;
+  justify-content: flex-end;
+}
+
+/* Estilo para o input de total de horas do dia no modal */
+.total-horas-dia {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.total-horas-dia b {
+  color: #3373C8;
+  font-size: 15px;
+  font-weight: 600;
+  margin-right: 4px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+}
+
+.total-horas-dia input[type="text"] {
+  flex: 1;
+  background: #6a98d3;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px 8px 14px;
+  color: #3373C8;
+  font-size: 12px;
+  font-weight: 500;
+  outline: none;
+  line-height: 1.2;
+}
+
+/* Estilo para linha de horários com checkboxes lado a lado */
+.linha-horarios {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 18px;
+  margin-bottom: 12px;
+  justify-content: center;
+  text-align: center;
+
+}
+
+.linha-horarios label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #2056a8;
+  background: #d5e4f2;
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+  min-width: 140px;
+  justify-content: flex-start;
+  margin-bottom: 4px;
+}
+
+/* Justificar os horários (labels) igualmente na linha */
+.linha-horarios {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+  justify-content: space-between;
+}
+
+/* Corrigir largura do modal-body apenas para o modal de horários */
+#staticBackdrop2 .modal-body {
+  width: 900px;
+  max-width: 100%;
+}
+
+.linha-horarios input[type="checkbox"] {
+  accent-color: #2056a8;
+}
+
+
+/* Responsividade para tabela de horários */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 900px) {
+  .tabela-horas .table-card {
+    padding: 0;
+  }
+
+  .table-responsive table {
+    min-width: 700px;
+    font-size: 12px;
+  }
+
+  .table-title {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .table-responsive table {
+    min-width: 600px;
+    font-size: 11px;
+  }
+
+  .table-title {
+    font-size: 0.95rem;
+  }
+
+  .badge {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+}
+
+main {
+  width: 100%;
+  min-height: calc(100vh - 140px);
+  box-sizing: border-box;
+}
+
+.meus-dados {
+  display: flex;
+  max-height: 300px;
+  flex-direction: column;
+  padding: 30px 20px;
+  color: #002352;
+
+}
+
+.error-msg {
+  color: red;
+}
+
+.table-header-small {
+  font-size: 10px;
+}
+
+.table-cell-small {
+  font-size: 12px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.badge-fixed {
+  width: 110px;
+  padding: 8px 8px;
+}
+
+.textarea-tall {
+  height: 120px;
+}
+
+.avaliada-em {
+  font-size: 14px;
+}
+
+.nome {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.matricula,
+.email,
+.cargo {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.horas-feitas-filtro {
+  display: flex;
+  width: 100%;
+  padding: 40px 20px;
+}
+
+.mes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.ano {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+b {
+  color: #3373C8;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.filtro {
+  width: 99%;
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+select {
+  width: 108px;
+  height: 34px;
+  border-radius: 4px;
+  padding: 4px 26px 4px 10px;
+  color: #002352;
+  background: #ebf4ff;
+  border: 1px solid #cfe6ff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('/assets/icon-select.svg');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px 16px;
+}
+
+img {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.horarios {
+  min-height: 500px;
+  display: flex;
+  margin: 20px 0;
+}
+
+.tabela-horas {
+  width: 100%;
+  padding: 12px 20px 24px 20px;
+  box-sizing: border-box;
+}
+
+.tabela-horas .table-card {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.tabela-horas .table-title {
+  background: #2f6fc1;
+  color: #fff;
+  text-align: center;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.tabela-horas .table-body {
+  background: transparent;
+  padding: 0;
+}
+
+.tabela-horas table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-horas thead th {
+  background: #e7f2ff;
+  color: #2f6fc1;
+  font-weight: 700;
+  padding: 14px 20px;
+  text-align: center;
+  min-width: 106px;
+}
+
+.tabela-horas thead th:nth-child(n+2) {
+  text-align: center;
+}
+
+.tabela-horas tbody td {
+  padding: 18px 20px;
+  color: #002352;
+  border-top: 1px solid rgba(47, 111, 193, 0.06);
+  text-align: center;
+  min-width: 106px;
+}
+
+.tabela-horas tbody tr:nth-child(odd) {
+  background: #ffffff;
+}
+
+.tabela-horas tbody tr:nth-child(even) {
+  background: #f3f9ff;
+}
+
+.tabela-horas tbody tr td:first-child {
+  width: 220px;
+  text-align: center;
+}
+
+.tabela-horas tbody tr:hover {
+  background: #eaf4ff;
+}
+
+
+
+.tabela-justificadas {
+  margin-top: 50px;
+  width: 100%;
+  padding: 12px 20px 24px 20px;
+  box-sizing: border-box;
+}
+
+.tabela-justificadas .table-card {
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden
+}
+
+.tabela-justificadas .table-title {
+  background: #2f6fc1;
+  color: #fff;
+  text-align: center;
+  padding: 12px 16px;
+  font-weight: 700
+}
+
+.tabela-justificadas table {
+  width: 100%;
+  border-collapse: collapse
+}
+
+.tabela-justificadas thead th {
+  background: #e7f2ff;
+  color: #2f6fc1;
+  font-weight: 700;
+  padding: 14px 20px;
+  text-align: left
+}
+
+.tabela-justificadas thead th:nth-child(n+2) {
+  text-align: center
+}
+
+.tabela-justificadas tbody td {
+  padding: 18px 20px;
+  color: #002352;
+  border-top: 1px solid rgba(47, 111, 193, 0.06);
+  text-align: center
+}
+
+.tabela-justificadas tbody tr:nth-child(even) {
+  background: #f8fbff
+}
+
+.tabela-justificadas tbody tr:nth-child(odd) {
+  background: #ffffff
+}
+
+.tabela-justificadas tbody tr td:first-child {
+  text-align: left;
+  width: 240px
+}
+
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.badge-success {
+  background: #2fe6a8;
+  color: #003827;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05) inset;
+}
+
+.badge-horario {
+  background: #2F6FC1;
+  color: white;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05) inset;
+}
+
+.badge-horario-bolsa {
+  background: #25e317;
+  color: white;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05) inset;
+}
+
+.badge-analyze {
+  background: #f3d50d;
+  color: #665c00;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05) inset;
+}
+
+.badge-denied {
+  background: #ff6b6b;
+  color: #5c0000;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05) inset;
+}
+
+.action-link {
+  color: #2f6fc1;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+img {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+section.buttons {
+  gap: 30px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px 30px;
+
+  .button-one-popup-lithg {
+    border: 3px solid rgba(51, 116, 200, 0.908);
+    height: 38px;
+    padding: 6px 18px;
+  }
+
+}
+
+.button-one,
+.button-two {
+  width: 180px;
+  height: 45px;
+  font-size: 14px;
+}
+
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .meus-dados {
+    padding: 30px 18px;
+  }
+
+  .nome {
+    font-size: 22px;
+  }
+
+  .matricula,
+  .email,
+  .cargo {
+    font-size: 18px;
+  }
+
+  .horas-feitas-filtro {
+    padding: 30px 18px;
+  }
+
+  .filtro {
+    gap: 12px;
+  }
+
+  select {
+    width: 100px;
+    font-size: 13px;
+  }
+
+  .tabela-horas {
+    padding: 10px 18px 20px 18px;
+  }
+
+  .tabela-horas thead th {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .tabela-horas tbody td {
+    padding: 16px 16px;
+    font-size: 14px;
+  }
+
+  .tabela-justificadas {
+    padding: 10px 18px 20px 18px;
+  }
+
+  .tabela-justificadas thead th {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .tabela-justificadas tbody td {
+    padding: 16px 16px;
+    font-size: 14px;
+  }
+}
+
+/* Celular grande */
+@media (max-width: 768px) {
+  .meus-dados {
+    padding: 25px 15px;
+  }
+
+  .nome {
+    font-size: 20px;
+  }
+
+  .matricula,
+  .email {
+    font-size: 16px;
+  }
+
+  .horas-feitas-filtro {
+    padding: 25px 15px;
+    margin-top: 0;
+  }
+
+  .filtro {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  b {
+    font-size: 16px;
+  }
+
+  select {
+    width: 90px;
+  }
+
+  .tabela-horas {
+    padding: 8px 15px 18px 15px;
+  }
+
+  .tabela-horas .table-body {
+    overflow-x: auto;
+  }
+
+  .tabela-horas table {
+    min-width: 600px;
+  }
+
+  .tabela-horas thead th {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .tabela-horas tbody td {
+    padding: 12px 12px;
+    font-size: 13px;
+  }
+
+  .tabela-horas .table-title {
+    padding: 10px 12px;
+    font-size: 15px;
+  }
+
+  .tabela-justificadas {
+    padding: 8px 15px 18px 15px;
+    margin-top: 30px;
+  }
+
+  .tabela-justificadas .table-body {
+    overflow-x: auto;
+  }
+
+  .tabela-justificadas table {
+    min-width: 700px;
+  }
+
+  .tabela-justificadas thead th {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .tabela-justificadas tbody td {
+    padding: 12px 12px;
+    font-size: 13px;
+  }
+
+  .tabela-justificadas .table-title {
+    padding: 10px 12px;
+    font-size: 15px;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  .modal-dialog {
+    max-width: 90%;
+  }
+
+  .modal-body {
+    padding: 8px 14px;
+  }
+
+  .time {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .time .data,
+  .time .hora,
+  .time .minuto {
+    width: 100%;
+  }
+}
+
+/* Celular */
+@media (max-width: 480px) {
+  main {
+    min-height: calc(100vh - 120px);
+  }
+
+  .meus-dados {
+    padding: 20px 12px;
+  }
+
+  .nome {
+    font-size: 18px;
+  }
+
+  .matricula,
+  .email {
+    font-size: 14px;
+  }
+
+  .horas-feitas-filtro {
+    padding: 20px 12px;
+  }
+
+  .filtro {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .mes,
+  .ano {
+    flex: 1;
+    align-items: stretch;
+  }
+
+  b {
+    font-size: 14px;
+    text-align: left;
+  }
+
+  select {
+    width: 100%;
+    font-size: 12px;
+    padding: 4px 22px 4px 8px;
+  }
+
+  .tabela-horas {
+    padding: 8px 12px 15px 12px;
+  }
+
+  .tabela-horas .table-body {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabela-horas table {
+    min-width: 550px;
+  }
+
+  .tabela-horas thead th {
+    padding: 8px 8px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .tabela-horas tbody td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .tabela-horas .table-title {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .tabela-justificadas {
+    padding: 8px 12px 15px 12px;
+    margin-top: 20px;
+  }
+
+  .tabela-justificadas .table-body {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabela-justificadas table {
+    min-width: 650px;
+  }
+
+  .tabela-justificadas thead th {
+    padding: 8px 8px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .tabela-justificadas tbody td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .tabela-justificadas tbody tr td:first-child {
+    width: auto;
+    min-width: 140px;
+  }
+
+  .tabela-justificadas .table-title {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .badge {
+    font-size: 10px;
+    padding: 2px 5px;
+  }
+
+  img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .modal-dialog {
+    max-width: 100%;
+  }
+
+  .modal-content {
+    width: 100%;
+  }
+
+  .modal-body {
+    padding: 8px 12px;
+  }
+
+  .modal-body b {
+    font-size: 13px;
+  }
+
+  .modal-body input {
+    font-size: 13px;
+  }
+
+  .time {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .time .data,
+  .time .hora,
+  .time .minuto {
+    width: 100%;
+  }
+
+  .file input[type="text"] {
+    font-size: 13px;
+  }
+
+  .obs .jutificativa textarea {
+    min-height: 60px;
+    font-size: 14px;
+  }
+
+  .button-one-popup-lithg {
+    min-width: 90px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  p .avaliada-em {
+    font-size: 14px;
+  }
+}
+
+
+/* Modal styling to match mockup */
+.modal-content {
+  margin: auto;
+  width: 500px;
+  border-radius: 10px;
+  background: #f6fbff;
+  /* very light blue */
+  border: 1px solid rgba(47, 111, 193, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.modal-header {
+  border-bottom: none;
+  background: transparent;
+  padding: 12px 18px 0 18px;
+}
+
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 18px 0 18px;
+  color: #3373C8;
+}
+
+.modal-body label {
+  color: #3373C8;
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.modal-body input[type="date"],
+.modal-body input[type="time"],
+.modal-body input[type="number"],
+.modal-body input[type="text"],
+.modal-body .form-control {
+  background: #ebf4ffe8;
+  border: 1px solid rgba(47, 111, 193, 0.08);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #002352;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-body select {
+  background: #ebf4ffe8;
+  border: 1px solid rgba(47, 111, 193, 0.08);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #002352;
+  width: 100%;
+  box-sizing: border-box;
+  background-image: none;
+}
+
+.time {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.time .data,
+.time .hora,
+.time .minuto {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 0;
+}
+
+.file {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.obs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px
+}
+
+.obs .jutificativa textarea {
+  min-height: 80px;
+  max-height: 180px;
+  /* limite de altura antes de aparecer a rolagem */
+  padding: 10px;
+  overflow: auto;
+  /* ativa a rolagem quando exceder max-height */
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid rgba(47, 111, 193, 0.08);
+  background: #ebf4ffe0;
+  color: #002352;
+  resize: vertical;
+  /* permite que o usuário redimensione verticalmente se desejar */
+}
+
+.modal-footer {
+  border-top: none;
+  padding: 12px 18px 18px 18px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.button-one-popup,
+.button-one-popup-lithg {
+  min-width: 110px;
+  height: 36px;
+  border-radius: 30px;
+  padding: 6px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button-one-popup {
+  background: #3373C8;
+  color: #fff;
+  border: none;
+}
+
+.button-one-popup-lithg {
+  background: transparent;
+  color: #3373C8;
+  border: 2px solid rgba(51, 115, 200, 0.2);
+}
+
+
+.modal-dialog {
+  max-width: 720px;
+}
+
+#staticBackdrop2 .modal-dialog {
+  max-width: 640px;
+}
+
+#staticBackdrop2 .modal-content {
+  width: 900px;
+  max-width: 98vw;
+  max-height: 85vh;
+}
+
+#staticBackdrop2 .modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+@media (max-width: 720px) {
+  #staticBackdrop2 .modal-dialog {
+    max-width: 95%;
+  }
+
+  #staticBackdrop2 .modal-content {
+    width: 100%;
+    max-height: 85vh;
+  }
+
+  #staticBackdrop2 .modal-body {
+    max-height: 65vh;
+  }
+}
+
+b {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+tr a {
+  color: #002352;
+
+}
+
+
+/* Estilização do input file: caixa + botão interno */
+.modal-body .file input[type="file"] {
+  background: #ebf4ffcc;
+  border: 1px solid rgba(47, 111, 193, 0.08);
+  border-radius: 8px;
+  padding: 8px 8px;
+  color: #002352;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Botão embutido do input file (browsers modernos) */
+.modal-body .file input[type="file"]::file-selector-button {
+  background: #3373C8;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Webkit fallback */
+.modal-body .file input[type="file"]::-webkit-file-upload-button {
+  background: #3373C8;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+@media (max-width: 720px) {
+  .container {
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .tempo .horas {
+    font-size: 64px;
+  }
+
+  .tempo .data {
+    font-size: 18px;
+  }
+
+  .botoes {
+    gap: 15px;
+  }
+
+  .button-one,
+  .button-two {
+    width: 180px;
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .modal-dialog {
+    max-width: 92%;
+  }
+
+  .modal-body {
+    padding: 8px 12px;
+  }
+
+  .time {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .time .data,
+  .time .hora,
+  .time .minuto {
+    width: 100%;
+  }
+
+  .file input[type="file"] {
+    width: 100%;
+  }
+}
+
+
+
+@media (max-width: 720px) {
+  .container {
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .tempo .horas {
+    font-size: 64px;
+  }
+
+  .tempo .data {
+    font-size: 18px;
+  }
+
+  .botoes {
+    gap: 15px;
+  }
+
+  .button-one,
+  .button-two {
+    width: 180px;
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .modal-dialog {
+    max-width: 92%;
+  }
+
+  .modal-body {
+    padding: 8px 12px;
+  }
+
+  .time {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .time .data,
+  .time .hora,
+  .time .minuto {
+    width: 100%;
+  }
+
+  .file input[type="file"] {
+    width: 100%;
+  }
+}
+
+.separador {
+  padding: 0 20px;
+  display: flex;
+  width: 100%;
+  border: 0.2px solid rgba(14, 17, 17, 0.514);
+  margin: 20px 0;
+}
+
+.avaliada-em {
+  font-size: 12px;
+  font-weight: 500;
+  color: #002352;
+  margin-top: 8px;
+}

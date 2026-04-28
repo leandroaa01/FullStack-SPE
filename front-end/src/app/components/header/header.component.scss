@@ -1,0 +1,168 @@
+.app-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #EBF4FF;
+  padding: 10px 20px;
+  color: #3373C8;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.logo img {
+  height: 32px;
+}
+
+.dimap {
+  font-size: 22px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+
+.dimap .short {
+  display: none;
+}
+.dimap .full {
+  display: inline;
+}
+
+.routes-icons {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+    }
+
+
+.routes-icons li {
+  display: flex;
+}
+
+.routes-icons .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 6px;
+  opacity: 0.65;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.routes-icons .nav-link.active-link {
+  opacity: 1;
+}
+
+.routes-icons img {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.app-header.home-context .routes-icons .nav-link.active-link {
+  background-color: #a8c4ef;
+}
+
+.app-header.meus-dados-context .routes-icons .nav-link.active-link {
+  background-color: #d7ddf3;
+}
+
+.app-header.admin-context .routes-icons .nav-link.active-link {
+  background-color: #d7ddf3;
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .app-header {
+    padding: 10px 15px;
+  }
+
+  .logo img {
+    height: 28px;
+  }
+
+  .dimap {
+    font-size: 18px;
+  }
+
+  .routes-icons {
+    gap: 20px;
+  }
+
+  .routes-icons img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Celular grande */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 8px 12px;
+  }
+
+  .logo img {
+    height: 26px;
+  }
+
+  .dimap {
+    font-size: 16px;
+  }
+
+  .dimap .full {
+    display: none;
+  }
+  
+  .dimap .short {
+    display: inline;
+  }
+
+  .routes-icons {
+    gap: 18px;
+  }
+
+  .routes-icons img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Celular */
+@media (max-width: 480px) {
+  .app-header {
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 10px;
+  }
+
+  .logo {
+    gap: 5px;
+  }
+
+  .logo img {
+    height: 24px;
+  }
+
+  .dimap {
+    font-size: 14px;
+  }
+
+  .routes-icons {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .routes-icons img {
+    width: 18px;
+    height: 18px;
+  }
+}
