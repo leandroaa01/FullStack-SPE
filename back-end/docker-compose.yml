@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: spe-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${BD_PASSWORD}
+      MYSQL_DATABASE: ${BD_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - spe-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${BD_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spe-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=${BD_URL}
+      - SPRING_DATASOURCE_USERNAME=${BD_USER}
+      - SPRING_DATASOURCE_PASSWORD=${BD_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - spe-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+networks:
+  spe-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
